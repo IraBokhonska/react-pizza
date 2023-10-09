@@ -1,23 +1,46 @@
 import React from "react";
-import styles from "./Search.module.scss";
+import debounce from "lodash.debounce";
 import { BsSearchHeart } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
-const Search = ({ searchValue, setSearchValue }) => {
+import { SearchContext } from "../../App";
+import styles from "./Search.module.scss";
+
+const Search = () => {
+  const [value, setValue] = React.useState("");
+  const { setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef();
+
+  const onClickClear = () => {
+    setSearchValue("");
+    setValue("");
+    inputRef.current.focus();
+  };
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+    }, 1000),
+    []
+  );
+
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
+  };
+
   return (
     <div className={styles.root}>
       <BsSearchHeart className={styles.icon} />
       <input
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        value={value}
+        onChange={onChangeInput}
         className={styles.input}
         placeholder="Пошук піци..."
       />
-      {searchValue && (
-        <AiOutlineClose
-          onClick={() => setSearchValue("")}
-          className={styles.clearIcon}
-        />
+      {value && (
+        <AiOutlineClose onClick={onClickClear} className={styles.clearIcon} />
       )}
     </div>
   );
