@@ -24,6 +24,22 @@ body {
 .content {
   padding: 40px 0;
 
+  &__error-info {
+    text-align: center;
+    margin: 60px auto;
+    max-width: 500px;
+    margin-bottom: 10px;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+
   &__title {
     font-size: 38px;
     font-weight: 700;
@@ -311,17 +327,18 @@ body {
   }
 
   &--empty {
-    margin: 0 auto;
-    width: 560px;
+    margin: 80px auto;
+    max-width: 620px;
     text-align: center;
 
     h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
+      font-size: 36px;
+      margin-bottom: 15px;
+      font-weight: 700;
     }
 
     p {
-      font-size: 18px;
+      font-size: 20px;
       line-height: 145.4%;
       letter-spacing: 0.01em;
       color: #777777;
