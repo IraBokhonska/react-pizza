@@ -1,7 +1,6 @@
 import React from "react";
-import axios from "axios";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Categories from "../components/Categories";
@@ -10,29 +9,25 @@ import { list } from "../components/Sort";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
-import { SearchContext } from "../App";
 
 import {
+  selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categoryId, sort, currentPage } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizza);
+  const { categoryId, sort, currentPage, searchValue } =
+    useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizzaData);
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const { searchValue } = React.useContext(SearchContext);
-
   const onChangeCategory = (id) => {
-    console.log(id);
     dispatch(setCategoryId(id));
   };
 
@@ -95,7 +90,11 @@ const Home = () => {
   }, []);
   //categoryId, sort.sortProperty, searchValue, currentPage
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj) => (
+    <Link key={obj.id} to={`/pizza/${obj.id}`}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Sceleton key={index} />

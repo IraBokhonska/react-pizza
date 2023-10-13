@@ -6,5 +6,3 @@ import pizza from "./slices/pizzaSlice";
 export const store = configureStore({
   reducer: { filter, cart, pizza },
 });
-
-console.log(store, "REDUX");
