@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
-import { list } from "../components/Sort";
+import { sortList } from "../components/Sort";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
@@ -18,21 +18,23 @@ import {
 } from "../redux/slices/filterSlice";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
+
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryId(id));
+  const onChangeCategory = (index: number) => {
+    dispatch(setCategoryId(index));
   };
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
@@ -42,6 +44,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -72,7 +75,9 @@ const Home = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
 
-      const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+      const sort = sortList.find(
+        (obj) => obj.sortProperty === params.sortProperty
+      );
 
       dispatch(
         setFilters({
@@ -90,7 +95,7 @@ const Home = () => {
   }, []);
   //categoryId, sort.sortProperty, searchValue, currentPage
 
-  const pizzas = items.map((obj) => (
+  const pizzas = items.map((obj: any) => (
     <Link key={obj.id} to={`/pizza/${obj.id}`}>
       <PizzaBlock {...obj} />
     </Link>
