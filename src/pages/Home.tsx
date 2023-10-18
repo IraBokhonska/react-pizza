@@ -1,7 +1,7 @@
 import React from "react";
 import qs from "qs";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
@@ -16,22 +16,26 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
+import {
+  SearchPizzaParams,
+  fetchPizzas,
+  selectPizzaData,
+} from "../redux/slices/pizzaSlice";
 import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isSearch = React.useRef(false);
+  // const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
-  const onChangeCategory = (index: number) => {
+  const onChangeCategory = React.useCallback((index: number) => {
     dispatch(setCategoryId(index));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -57,48 +61,61 @@ const Home: React.FC = () => {
   };
 
   //Якщо змінили параметри і був перший рендер
-  React.useEffect(() => {
-    if (isMounted.current) {
-      const queryString = qs.stringify({
-        sortProperty: sort.sortProperty,
-        categoryId,
-        currentPage,
-      });
-      navigate(`?${queryString}`);
-    }
-    isMounted.current = true;
-  }, [categoryId, sort.sortProperty, currentPage]);
+  // React.useEffect(() => {
+  //   if (isMounted.current) {
+  //     const params = {
+  //       categoryId: categoryId > 0 ? categoryId : null,
+  //       sortProperty: sort.sortProperty,
+  //       currentPage,
+  //     };
 
-  //Якщо був перший рендер, то перевіряємо URL-параметри і зберігаємо в редакс
-  React.useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+  //     const queryString = qs.stringify(params);
+  //     navigate(`?${queryString}`);
+  //   }
 
-      const sort = sortList.find(
-        (obj) => obj.sortProperty === params.sortProperty
-      );
+  //   const params = qs.parse(
+  //     window.location.search.substring(1)
+  //   ) as unknown as SearchPizzaParams;
+  //   const sortObj = sortList.find((obj) => obj.sortProperty === params.sortBy);
+  //   dispatch(
+  //     setFilters({
+  //       searchValue: params.search,
+  //       categoryId: Number(params.category),
+  //       currentPage: Number(params.currentPage),
+  //       sort: sort || sortList[0],
+  //     })
+  //   );
+  //   getPizzas();
+  //   isMounted.current = true;
+  // }, [categoryId, sort.sortProperty, currentPage, searchValue]);
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort,
-        })
-      );
-      isSearch.current = true;
-    }
-  }, []);
-
-  //Якщо був перший рендер, подаємо запит на піци
   React.useEffect(() => {
     getPizzas();
-  }, []);
-  //categoryId, sort.sortProperty, searchValue, currentPage
+  }, [categoryId, sort.sortProperty, currentPage, searchValue]);
 
-  const pizzas = items.map((obj: any) => (
-    <Link key={obj.id} to={`/pizza/${obj.id}`}>
-      <PizzaBlock {...obj} />
-    </Link>
-  ));
+  //Якщо був перший рендер, то перевіряємо URL-параметри і зберігаємо в редакс
+  // Парсим параметры при первом рендере
+  // React.useEffect(() => {
+  //   if (window.location.search) {
+  //     const params = qs.parse(
+  //       window.location.search.substring(1)
+  //     ) as unknown as SearchPizzaParams;
+  //     const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+  //     dispatch(
+  //       setFilters({
+  //         searchValue: params.search,
+  //         categoryId: Number(params.category),
+  //         currentPage: Number(params.currentPage),
+  //         sort: sort || sortList[0],
+  //       })
+  //     );
+  //   }
+  //   isMounted.current = true;
+  // }, []);
+
+  //Якщо був перший рендер, подаємо запит на піци
+
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Sceleton key={index} />
@@ -108,7 +125,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Всі піци</h2>
       {status === "error" ? (
