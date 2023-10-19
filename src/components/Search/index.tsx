@@ -5,7 +5,7 @@ import debounce from "lodash.debounce";
 import { BsSearchHeart } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
-import { setSearchValue } from "../../redux/slices/filterSlice";
+import { setSearchValue } from "../../redux/filter/slice";
 
 import styles from "./Search.module.scss";
 

@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  CartItemType,
-  addItem,
-  selectCartItemById,
-} from "../../redux/slices/cartSlice";
+import { CartItemType } from "../../redux/cart/types";
+import { addItem } from "../../redux/cart/slice";
+import { selectCartItemById } from "../../redux/cart/selectors";
+
 const typeNames = ["тонка", "традиційна"];
 
 type PizzaBlockProps = {
