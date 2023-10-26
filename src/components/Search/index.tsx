@@ -33,18 +33,20 @@ const Search = () => {
   };
 
   return (
-    <div className={styles.root}>
-      <BsSearchHeart className={styles.icon} />
-      <input
-        ref={inputRef}
-        value={value}
-        onChange={onChangeInput}
-        className={styles.input}
-        placeholder="Пошук піци..."
-      />
-      {value && (
-        <AiOutlineClose onClick={onClickClear} className={styles.clearIcon} />
-      )}
+    <div className={styles.search}>
+      <div className={styles.search__wrapper}>
+        <BsSearchHeart className={styles.icon} />
+        <input
+          ref={inputRef}
+          value={value}
+          onChange={onChangeInput}
+          className={styles.input}
+          placeholder="Пошук піци..."
+        />
+        {value && (
+          <AiOutlineClose onClick={onClickClear} className={styles.clearIcon} />
+        )}
+      </div>
     </div>
   );
 };

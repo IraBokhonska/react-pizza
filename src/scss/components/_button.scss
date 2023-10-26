@@ -1,17 +1,25 @@
 @import "../variables";
 
 .button {
-  display: inline-block;
-  background-color: $orange;
-  border-radius: 30px;
   padding: 10px 20px;
   min-width: 100px;
+  border-radius: 30px;
+  border: 1px solid transparent;
+
+  display: inline-block;
+  background-color: $orange;
+
   text-align: center;
   cursor: pointer;
   transition: background-color $duration ease-in-out,
     border-color $duration ease-in-out;
-  border: 1px solid transparent;
+
   @include noselect();
+
+  @media (max-width: 400px) {
+    padding: 5px 16px;
+    border-radius: 20px;
+  }
 
   &,
   span {
@@ -35,14 +43,15 @@
   }
 
   &--circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 32px;
     height: 32px;
     min-width: 32px;
     padding: 0;
     border-width: 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &--black {

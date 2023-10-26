@@ -99,9 +99,7 @@ export const CartItem: React.FC<CartItemProps> = ({
           </svg>
         </button>
       </div>
-      <div className="cart__item-price">
-        <b>{price * count} грн</b>
-      </div>
+      <div className="cart__item-price">{price * count} грн</div>
       <div className="cart__item-remove">
         <div
           onClick={onClickRemove}

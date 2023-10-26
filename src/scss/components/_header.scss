@@ -1,17 +1,30 @@
 @import "../variables";
 
 .header {
-  border-bottom: 1px solid $gray-line;
   padding: 40px 0;
+  border-bottom: 1px solid $gray-line;
+
+  @media (max-width: 1400px) {
+    padding-bottom: 70px;
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    padding-bottom: 0;
+  }
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 670px) {
+    @media (max-width: 1400px) {
+      position: relative;
+      gap: 50px;
+    }
+    @media (max-width: 768px) {
       flex-direction: column;
-      gap: 30px;
+      gap: 20px;
     }
   }
 
