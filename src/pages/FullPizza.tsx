@@ -7,6 +7,7 @@ const FullPizza: React.FC = () => {
     imageUrl: string;
     title: string;
     price: number;
+    description: string;
   }>();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,16 +32,15 @@ const FullPizza: React.FC = () => {
   }
 
   return (
-    <div className="container">
-      <img src={pizza.imageUrl} />
-      <h2>{pizza.title}</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem nulla
-        incidunt modi reprehenderit quia ea excepturi commodi qui nam.
-        Architecto quam quisquam omnis sunt velit voluptate fugit nesciunt
-        accusamus expedita?
-      </p>
-      <h4>{pizza.price} грн</h4>
+    <div className="container full-pizza">
+      <div className="full-pizza__img">
+        <img src={pizza.imageUrl} alt="pizzaItem" />
+      </div>
+      <div className="full-pizza__content">
+        <h2 className="full-pizza__title">{pizza.title}</h2>
+        <p className="full-pizza__description">{pizza.description}</p>
+        <h4 className="full-pizza__price">{pizza.price} грн</h4>
+      </div>
     </div>
   );
 };

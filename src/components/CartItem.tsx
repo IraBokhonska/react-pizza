@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { CartItemType } from "../redux/cart/types";
 import { addItem, minusItem, removeItem } from "../redux/cart/slice";
+import CustomModal from "./CustomModal";
 
 type CartItemProps = {
   id: string;
@@ -22,7 +23,16 @@ export const CartItem: React.FC<CartItemProps> = ({
   count,
   imageUrl,
 }) => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const dispatch = useDispatch();
+
+  const onClickRemove = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const onClickPlus = () => {
     dispatch(
@@ -36,10 +46,15 @@ export const CartItem: React.FC<CartItemProps> = ({
     dispatch(minusItem(id));
   };
 
-  const onClickRemove = () => {
-    if (window.confirm("Are you sure you want to remove?")) {
-      dispatch(removeItem(id));
-    }
+  // const onClickRemove = () => {
+  //   if (window.confirm("Are you sure you want to remove?")) {
+  //     dispatch(removeItem(id));
+  //   }
+  // };
+
+  const handleConfirmRemove = () => {
+    dispatch(removeItem(id));
+    setIsModalOpen(false);
   };
 
   return (
@@ -123,6 +138,13 @@ export const CartItem: React.FC<CartItemProps> = ({
           </svg>
         </div>
       </div>
+      {isModalOpen && (
+        <CustomModal
+          message="Ви дійсно хочете видалити піцу?"
+          onConfirm={handleConfirmRemove}
+          onCancel={closeModal}
+        />
+      )}
     </div>
   );
 };
