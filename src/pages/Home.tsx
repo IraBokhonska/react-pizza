@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import { sortList } from "../components/Sort";
-import Sceleton from "../components/PizzaBlock/Sceleton";
+import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 
@@ -117,8 +117,8 @@ const Home: React.FC = () => {
 
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
-  const skeletons = [...new Array(6)].map((_, index) => (
-    <Sceleton key={index} />
+  const skeletons = [...new Array(4)].map((_, index) => (
+    <Skeleton key={index} />
   ));
 
   return (

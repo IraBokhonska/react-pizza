@@ -14,12 +14,18 @@ type PopupClick = MouseEvent & {
 };
 
 export const sortList: SortItem[] = [
-  { name: "популярністю (desc)", sortProperty: SortPropertyEnum.RATING_DESC },
-  { name: "популярністю (asc)", sortProperty: SortPropertyEnum.RATING_ASC },
-  { name: "ціною (desc)", sortProperty: SortPropertyEnum.PRICE_DESC },
-  { name: "ціною (asc)", sortProperty: SortPropertyEnum.PRICE_ASC },
-  { name: "алфавітом (desc)", sortProperty: SortPropertyEnum.TITLE_DESC },
-  { name: "алфавітом (asc)", sortProperty: SortPropertyEnum.TITLE_ASC },
+  {
+    name: "популярністю (спаданням)",
+    sortProperty: SortPropertyEnum.RATING_DESC,
+  },
+  {
+    name: "популярністю (зростанням)",
+    sortProperty: SortPropertyEnum.RATING_ASC,
+  },
+  { name: "ціною (спаданням)", sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: "ціною (зростанням)", sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: "алфавітом (спаданням)", sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: "алфавітом (зростанням)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
 type SortPopupProps = {
@@ -29,8 +35,6 @@ type SortPopupProps = {
 const SortPopup: React.FC<SortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
-
-  console.log("SortPopup");
 
   const [open, setOpen] = React.useState(false);
 

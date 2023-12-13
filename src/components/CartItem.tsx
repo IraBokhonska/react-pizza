@@ -52,7 +52,7 @@ export const CartItem: React.FC<CartItemProps> = ({
   //   }
   // };
 
-  const handleConfirmRemove = () => {
+  const confirmRemove = () => {
     dispatch(removeItem(id));
     setIsModalOpen(false);
   };
@@ -141,7 +141,7 @@ export const CartItem: React.FC<CartItemProps> = ({
       {isModalOpen && (
         <CustomModal
           message="Ви дійсно хочете видалити піцу?"
-          onConfirm={handleConfirmRemove}
+          onConfirm={confirmRemove}
           onCancel={closeModal}
         />
       )}

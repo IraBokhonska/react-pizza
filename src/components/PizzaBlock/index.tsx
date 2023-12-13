@@ -10,7 +10,7 @@ const typeNames = ["тонка", "традиційна"];
 type PizzaBlockProps = {
   id: string;
   title: string;
-  price: number;
+  prices: number[];
   imageUrl: string;
   sizes: number[];
   types: number[];
@@ -20,7 +20,7 @@ type PizzaBlockProps = {
 const PizzaBlock: React.FC<PizzaBlockProps> = ({
   id,
   title,
-  price,
+  prices,
   imageUrl,
   sizes,
   types,
@@ -32,6 +32,12 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const [activeSize, setActiveSize] = React.useState(0);
 
   const addedCount = cartItem ? cartItem.count : 0;
+  const price =
+    sizes[activeSize] === 26
+      ? prices[0]
+      : sizes[activeSize] === 30
+      ? prices[1]
+      : prices[2];
 
   const onClickAdd = () => {
     const item: CartItemType = {

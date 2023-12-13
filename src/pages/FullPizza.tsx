@@ -28,7 +28,7 @@ const FullPizza: React.FC = () => {
   }, []);
 
   if (!pizza) {
-    return <>"Завантаження..."</>;
+    return <div className="full-pizza__loading">Завантаження...</div>;
   }
 
   return (
@@ -39,7 +39,7 @@ const FullPizza: React.FC = () => {
       <div className="full-pizza__content">
         <h2 className="full-pizza__title">{pizza.title}</h2>
         <p className="full-pizza__description">{pizza.description}</p>
-        <h4 className="full-pizza__price">{pizza.price} грн</h4>
+        <h4 className="full-pizza__price">від {pizza.price} грн</h4>
       </div>
     </div>
   );
