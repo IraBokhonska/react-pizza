@@ -6,7 +6,7 @@ type CustomModalProps = {
   onCancel: () => void;
 };
 
-const CustomModal: React.FC<CustomModalProps> = ({
+export const CustomModal: React.FC<CustomModalProps> = ({
   message,
   onConfirm,
   onCancel,

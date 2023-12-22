@@ -6,21 +6,32 @@ import { CartItem } from "../components/CartItem";
 import { clearItems } from "../redux/cart/slice";
 import { selectCart } from "../redux/cart/selectors";
 import CartEmpty from "../components/CartEmpty";
+import CustomModal from "../components/CustomModal";
 
 import { FiShoppingCart } from "react-icons/fi";
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { totalPrice, items } = useSelector(selectCart);
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
   const totalCount = items.reduce(
     (sum: number, item: any) => sum + item.count,
     0
   );
 
-  const onClickClear = () => {
-    if (window.confirm("Очистити корзину?")) {
-      dispatch(clearItems());
-    }
+  const onConfirmClear = () => {
+    dispatch(clearItems());
+    setIsModalOpen(false);
+  };
+
+  const onClickRemove = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   if (!totalPrice) {
@@ -64,7 +75,7 @@ const Cart: React.FC = () => {
             </svg>
             <h2>Корзина</h2>
           </div>
-          <div onClick={onClickClear} className="cart__clear">
+          <div onClick={onClickRemove} className="cart__clear">
             <svg
               width="20"
               height="20"
@@ -145,6 +156,13 @@ const Cart: React.FC = () => {
             </div>
           </div>
         </div>
+        {isModalOpen && (
+          <CustomModal
+            message="Очистити корзину?"
+            onConfirm={onConfirmClear}
+            onCancel={closeModal}
+          />
+        )}
       </div>
     </div>
   );

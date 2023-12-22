@@ -27,17 +27,22 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   rating,
 }) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector(selectCartItemById(id));
+
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
 
-  const addedCount = cartItem ? cartItem.count : 0;
   const price =
     sizes[activeSize] === 26
       ? prices[0]
       : sizes[activeSize] === 30
       ? prices[1]
       : prices[2];
+
+  const cartItem = useSelector(
+    selectCartItemById(id, sizes[activeSize], typeNames[activeType], price)
+  );
+
+  const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
     const item: CartItemType = {

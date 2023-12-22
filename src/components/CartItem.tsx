@@ -1,7 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CartItemType } from "../redux/cart/types";
 import { addItem, minusItem, removeItem } from "../redux/cart/slice";
+import { selectCartItemById } from "../redux/cart/selectors";
 import CustomModal from "./CustomModal";
 
 type CartItemProps = {
@@ -26,6 +27,8 @@ export const CartItem: React.FC<CartItemProps> = ({
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const dispatch = useDispatch();
 
+  const cartItem = useSelector(selectCartItemById(id, size, type, price));
+
   const onClickRemove = () => {
     setIsModalOpen(true);
   };
@@ -38,22 +41,39 @@ export const CartItem: React.FC<CartItemProps> = ({
     dispatch(
       addItem({
         id,
+        title,
+        type,
+        size,
+        price,
+        imageUrl,
       } as CartItemType)
     );
   };
 
   const onClickMinus = () => {
-    dispatch(minusItem(id));
+    dispatch(
+      minusItem({
+        id,
+        title,
+        type,
+        size,
+        price,
+        imageUrl,
+      } as CartItemType)
+    );
   };
 
-  // const onClickRemove = () => {
-  //   if (window.confirm("Are you sure you want to remove?")) {
-  //     dispatch(removeItem(id));
-  //   }
-  // };
-
   const confirmRemove = () => {
-    dispatch(removeItem(id));
+    dispatch(
+      removeItem({
+        id,
+        title,
+        type,
+        size,
+        price,
+        imageUrl,
+      } as CartItemType)
+    );
     setIsModalOpen(false);
   };
 
@@ -114,7 +134,9 @@ export const CartItem: React.FC<CartItemProps> = ({
           </svg>
         </button>
       </div>
-      <div className="cart__item-price">{price * count} грн</div>
+      <div className="cart__item-price">
+        {cartItem ? cartItem.price * cartItem.count : 0} грн
+      </div>
       <div className="cart__item-remove">
         <div
           onClick={onClickRemove}
