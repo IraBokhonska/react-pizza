@@ -6,8 +6,9 @@ import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import FullPizza from "./pages/FullPizza";
 
-import "./scss/app.scss";
 import MainLayout from "./layouts/MainLayout";
+
+import "./scss/app.scss";
 
 function App() {
   return (

@@ -1,5 +1,3 @@
-@import "../variables";
-
 .header {
   padding: 40px 0;
   border-bottom: 1px solid $gray-line;
@@ -22,6 +20,7 @@
       position: relative;
       gap: 50px;
     }
+
     @media (max-width: 768px) {
       flex-direction: column;
       gap: 20px;

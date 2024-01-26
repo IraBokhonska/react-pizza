@@ -7,7 +7,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 import { setSearchValue } from "../../redux/filter/slice";
 
-import styles from "./Search.module.scss";
+import "./search.scss";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -33,18 +33,18 @@ const Search = () => {
   };
 
   return (
-    <div className={styles.search}>
-      <div className={styles.search__wrapper}>
-        <BsSearchHeart className={styles.icon} />
+    <div className="search">
+      <div className="search__wrapper ">
+        <BsSearchHeart className="icon" />
         <input
           ref={inputRef}
           value={value}
           onChange={onChangeInput}
-          className={styles.input}
+          className="input"
           placeholder="Пошук піци..."
         />
         {value && (
-          <AiOutlineClose onClick={onClickClear} className={styles.clearIcon} />
+          <AiOutlineClose onClick={onClickClear} className="clearIcon" />
         )}
       </div>
     </div>

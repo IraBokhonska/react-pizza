@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
+import "../scss/pages/_full-pizza.scss";
+
 const FullPizza: React.FC = () => {
   const [pizza, setPizza] = React.useState<{
     imageUrl: string;

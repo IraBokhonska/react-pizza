@@ -8,6 +8,7 @@ import { selectCart } from "../redux/cart/selectors";
 import CartEmpty from "../components/CartEmpty";
 import CustomModal from "../components/CustomModal";
 
+import "../scss/pages/_cart.scss";
 import { FiShoppingCart } from "react-icons/fi";
 
 const Cart: React.FC = () => {
@@ -114,6 +115,13 @@ const Cart: React.FC = () => {
             </svg>
             <span>Очистити корзину</span>
           </div>
+          {isModalOpen && (
+            <CustomModal
+              message="Очистити корзину?"
+              onConfirm={onConfirmClear}
+              onCancel={closeModal}
+            />
+          )}
         </div>
         <div className="content__items">
           {items.map((item: any) => (
@@ -156,13 +164,13 @@ const Cart: React.FC = () => {
             </div>
           </div>
         </div>
-        {isModalOpen && (
+        {/* {isModalOpen && (
           <CustomModal
             message="Очистити корзину?"
             onConfirm={onConfirmClear}
             onCancel={closeModal}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

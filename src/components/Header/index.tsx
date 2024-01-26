@@ -2,10 +2,11 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import logoSvg from "../assets/img/pizza-logo.svg";
-import Search from "./Search";
-import { selectCart } from "../redux/cart/selectors";
+import logoSvg from "../../assets/img/pizza-logo.svg";
+import Search from "../Search";
+import { selectCart } from "../../redux/cart/selectors";
 
+import "./header.scss";
 import { FiShoppingCart } from "react-icons/fi";
 
 function Header() {
@@ -29,7 +30,7 @@ function Header() {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/" className="logo">
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
@@ -44,7 +45,7 @@ function Header() {
           {location.pathname !== "/cart" && (
             <Link to="/cart" className="button button--cart">
               <span>{totalPrice} грн</span>
-              <div className="button__delimiter"></div>
+              <div className="button--delimiter"></div>
               <FiShoppingCart className="shopping" />
               <span>{totalCount}</span>
             </Link>

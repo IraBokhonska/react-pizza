@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
 import { CartItemType } from "../../redux/cart/types";
 import { addItem } from "../../redux/cart/slice";
 import { selectCartItemById } from "../../redux/cart/selectors";
+
+import "./pizza-block.scss";
 
 const typeNames = ["тонка", "традиційна"];
 

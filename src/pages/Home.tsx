@@ -26,16 +26,18 @@ import { useAppDispatch } from "../redux/store";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
-  const onChangeCategory = React.useCallback((index: number) => {
-    dispatch(setCategoryId(index));
-  }, []);
+  const onChangeCategory = React.useCallback(
+    (index: number) => {
+      dispatch(setCategoryId(index));
+    },
+    [dispatch]
+  );
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -60,63 +62,22 @@ const Home: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  //Якщо змінили параметри і був перший рендер
-  // React.useEffect(() => {
-  //   if (isMounted.current) {
-  //     const params = {
-  //       categoryId: categoryId > 0 ? categoryId : null,
-  //       sortProperty: sort.sortProperty,
-  //       currentPage,
-  //     };
+  React.useEffect(() => {
+    const params = {
+      categoryId: categoryId > 0 ? categoryId : null,
+      sortProperty: sort.sortProperty,
+      currentPage,
+    };
 
-  //     const queryString = qs.stringify(params);
-  //     navigate(`?${queryString}`);
-  //   }
-
-  //   const params = qs.parse(
-  //     window.location.search.substring(1)
-  //   ) as unknown as SearchPizzaParams;
-  //   const sortObj = sortList.find((obj) => obj.sortProperty === params.sortBy);
-  //   dispatch(
-  //     setFilters({
-  //       searchValue: params.search,
-  //       categoryId: Number(params.category),
-  //       currentPage: Number(params.currentPage),
-  //       sort: sort || sortList[0],
-  //     })
-  //   );
-  //   getPizzas();
-  //   isMounted.current = true;
-  // }, [categoryId, sort.sortProperty, currentPage, searchValue]);
+    const queryString = qs.stringify(params);
+    navigate(`?${queryString}`);
+  }, [categoryId, sort.sortProperty, currentPage, navigate]);
 
   React.useEffect(() => {
     getPizzas();
   }, [categoryId, sort.sortProperty, currentPage, searchValue]);
 
-  //Якщо був перший рендер, то перевіряємо URL-параметри і зберігаємо в редакс
-  // Парсим параметры при первом рендере
-  // React.useEffect(() => {
-  //   if (window.location.search) {
-  //     const params = qs.parse(
-  //       window.location.search.substring(1)
-  //     ) as unknown as SearchPizzaParams;
-  //     const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
-  //     dispatch(
-  //       setFilters({
-  //         searchValue: params.search,
-  //         categoryId: Number(params.category),
-  //         currentPage: Number(params.currentPage),
-  //         sort: sort || sortList[0],
-  //       })
-  //     );
-  //   }
-  //   isMounted.current = true;
-  // }, []);
-
-  //Якщо був перший рендер, подаємо запит на піци
-
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
-
   const skeletons = [...new Array(4)].map((_, index) => (
     <Skeleton key={index} />
   ));

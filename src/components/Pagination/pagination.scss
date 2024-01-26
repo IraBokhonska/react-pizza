@@ -1,21 +1,24 @@
-.root {
+.pagination {
+  display: flex;
+  justify-content: center;
+
   li {
     display: inline-block;
 
     a {
       display: inline-block;
-      color: #fe5f1e;
+      color: $orange;
       width: 45px;
       height: 42px;
       text-align: center;
       line-height: 38px;
-      border: 1px solid #fe5f1e;
+      border: 1px solid $orange;
       border-radius: 30px;
       margin-right: 10px;
       cursor: pointer;
 
       &:hover {
-        background-color: #fe5f1e;
+        background-color: $orange;
         transition: 0.3s;
         color: #fff;
       }
@@ -25,7 +28,7 @@
   :global {
     .selected {
       a {
-        background-color: #fe5f1e;
+        background-color: $orange;
         color: #fff;
       }
     }

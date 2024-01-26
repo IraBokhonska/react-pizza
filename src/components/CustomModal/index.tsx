@@ -1,4 +1,5 @@
 import React from "react";
+import "./custom-modal.scss";
 
 type CustomModalProps = {
   message: string;
